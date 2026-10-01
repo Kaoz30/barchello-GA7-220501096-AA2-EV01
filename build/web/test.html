@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<!--
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit this template
+-->
+<html>
+<head>
+    <title>Test Crear Usuario - Barchello Bávaro Pub</title>
+    <meta charset="UTF-8">
+</head>
+<body>
+    <h1>Crear Usuario</h1>
+    <form action="usuario" method="POST">
+        Nombre: <input type="text" name="nombre" required><br><br>
+        Email:  <input type="email" name="email" required><br><br>
+        Clave:  <input type="password" name="clave" required><br><br>
+        Rol (1-5): <input type="number" name="rol" value="2" min="1" max="5"><br><br>
+        <button type="submit">Crear</button>
+    </form>
+    <br>
+    <a href="usuario?accion=listar">Ver lista de usuarios</a>
+</body>
+</html>
