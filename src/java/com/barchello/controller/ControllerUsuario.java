@@ -29,37 +29,34 @@ public class ControllerUsuario extends HttpServlet {
     private final UsuarioServicio usuarioServicio = new UsuarioServicio();
 
     /**
-     * Maneja peticiones GET (listar usuarios).
-     */
+    * Maneja peticiones GET.
+    * Si accion=listar, obtiene los usuarios y los envía a la vista JSP.
+    * Si no, muestra un mensaje de bienvenida.
+    */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
         String accion = request.getParameter("accion");
 
-        response.setContentType("text/html;charset=UTF-8");
-        PrintWriter out = response.getWriter();
-
         if ("listar".equals(accion)) {
+            // 1. Obtener los usuarios desde el servicio
             List<UsuarioVO> usuarios = usuarioServicio.listarUsuarios();
 
-            out.println("<!DOCTYPE html>");
-            out.println("<html><head><title>Usuarios</title></head><body>");
-            out.println("<h1>Lista de Usuarios</h1>");
-            out.println("<ul>");
-            if (usuarios != null) {
-                for (UsuarioVO u : usuarios) {
-                    out.println("<li>" + u.getId() + " - " + u.getNombre()
-                            + " (" + u.getEmail() + ")</li>");
-                }
-            }
-            out.println("</ul>");
-            out.println("</body></html>");
+            // 2. Colocar la lista como atributo de la petición
+            request.setAttribute("usuarios", usuarios);
+
+            // 3. Hacer forward a la página JSP
+            request.getRequestDispatcher("/listaUsuarios.jsp").forward(request, response);
         } else {
+            // Página de bienvenida del Servlet
+            response.setContentType("text/html;charset=UTF-8");
+            PrintWriter out = response.getWriter();
             out.println("<!DOCTYPE html>");
             out.println("<html><head><title>Controller</title></head><body>");
             out.println("<h1>ControllerUsuario funcionando</h1>");
-            out.println("<p><a href='?accion=listar'>Listar usuarios</a></p>");
+            out.println("<p><a href='?accion=listar'>Listar usuarios (JSP)</a></p>");
+            out.println("<p><a href='test.html'>Crear usuario (HTML + POST)</a></p>");
             out.println("</body></html>");
         }
     }
