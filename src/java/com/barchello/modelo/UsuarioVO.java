@@ -18,7 +18,7 @@ public class UsuarioVO {
     private String clave;
     private int rol;
 
-    /** Constructor sin parámetros. */
+    /** Constructor sin parámetros (para el método actualizar) */
     public UsuarioVO() {
     }
 
@@ -37,7 +37,7 @@ public class UsuarioVO {
     }
 
     /**
-     * Constructor completo (para SELECT).
+     * Constructor completo (para SELECT,para el método buscarPorId).
      * @param id identificador único
      * @param nombre nombre completo
      * @param email correo electrónico
@@ -91,5 +91,24 @@ public class UsuarioVO {
 
     public void setRol(int rol) {
         this.rol = rol;
+    }
+    
+    /**
+     * Devuelve el nombre del rol según su ID.
+     * Se puede obtener con un switch o con un RolDAO
+     * Los IDs corresponden a la tabla rol de la base de datos barchello_ev01:
+     * 1 = admin, 2 = mesero, 3 = cocinero, 4 = cajero, 5 = bartender
+     * 
+     * @return el nombre del rol en minúsculas, o "default" si el ID no coincide
+     */
+    public String getNombreRol() {
+        switch (this.rol) {
+            case 1: return "admin";
+            case 2: return "mesero";
+            case 3: return "cocinero";
+            case 4: return "cajero";
+            case 5: return "bartender";
+            default: return "default";
+        }
     }
 }
